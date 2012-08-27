@@ -355,7 +355,7 @@ module FileSystemEntry
   end
 
   #
-  # renames this FileSystemEntry using File#ext.
+  # changes/returns this FileSystemEntry's extension using File#ext.
   #
   def ext(new_ext = nil)
     if new_ext

@@ -1742,7 +1742,7 @@ class RAMFile < AFile
     when RAM
       RAM.prepare_destination(new_name, overwrite)
       return RAMFile.new(new_name, @content.dup)
-    when
+    when MVS::PartitionedDataset
       dataset = directory
       member_name = new_name
       #

@@ -988,14 +988,14 @@ module LocalFileSystemEntry
     protected
 
     #
-    # does the same what Class::new() does: it creates an instance (a program
+    # <b>Inheritable.</b>
+    # 
+    # It does the same what Class::new() does: it creates an instance (a program
     # object) of the Class it is called on and calls the instance's
     # #initialize() passing +args+ and +block+ to it.
     #
-    # One may use it as an alias for Class::new() in case new() is overriden or
+    # One may use it as alias for Class::new() in case new() is overriden or
     # unavailable.
-    #
-    # <b>Inheritable.</b>
     # 
     def create(*args, &block)
       # See "Part of implementation of ::create()" sections inside this Module

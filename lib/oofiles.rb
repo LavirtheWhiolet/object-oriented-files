@@ -991,7 +991,7 @@ module LocalFileSystemEntry
     #
     # It creates an instance of the Class it is called on and calls
     # #initialize() of the instance passing +args+ and +block+ to it.
-    #
+    # 
     # You may use it as an alias for Class::new() in subclasses in case new() is
     # not available or overriden.
     # 

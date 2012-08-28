@@ -989,15 +989,14 @@ module LocalFileSystemEntry
 
     # <b>Inheritable.</b>
     #
-    # It creates an instance of the Class it is called on and calls
-    # #initialize() of the instance passing +args+ and +block+ to it.
-    # 
-    # You may use it as an alias for Class::new() in subclasses in case new() is
-    # not available or overriden.
+    # It does the same what Class::new() does: it creates an instance (a program
+    # object) of the Class it is called on and calls the instance's
+    # #initialize() passing +args+ and +block+ to it.
     # 
     def create(*args, &block)
       # See "Part of implementation of ::create()" for the rest of the
       # implementation.
+      raise %(Can not create an instance of #{self}: #{self} is abstract)
     end
 
   end

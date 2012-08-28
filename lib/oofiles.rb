@@ -979,7 +979,7 @@ module LocalFileSystemEntry
     # Part of implementation of ::create().
     def included(base) # :nodoc:
       # Hack: this method is called before any definition in +base+ occurs,
-      # so new() method is still one from Class.
+      # so new() method is currently one from Class.
       class << base
         alias create new
       end

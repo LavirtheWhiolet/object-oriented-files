@@ -990,9 +990,9 @@ module LocalFileSystemEntry
     #
     # <b>Inheritable.</b>
     # 
-    # It does the same what Class::new() does: it creates an instance (a program
-    # object) of the Class it is called on and calls the instance's
-    # #initialize() passing +args+ and +block+ to it.
+    # It does the same what Class::new() does: it creates an instance of the
+    # Class it is called on and calls the instance's #initialize() passing
+    # +args+ and +block+ to it.
     #
     # One may use it as alias for Class::new() in case new() is overriden or
     # unavailable.

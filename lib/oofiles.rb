@@ -998,7 +998,7 @@ module LocalFileSystemEntry
     # unavailable.
     # 
     def create(*args, &block)
-      # See "Part of implementation of ::create()" section inside this Module
+      # See "Part of implementation of ::create()" sections inside this Module
       # for the implementation.
     end
 

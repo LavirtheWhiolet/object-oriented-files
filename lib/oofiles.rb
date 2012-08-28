@@ -913,14 +913,6 @@ module LocalFileSystemEntry
       end
     end
 
-    # <b>Overrides</b> method in superclass.
-    def included(base) # :nodoc:
-      class << base
-        # I said, inherit all these elements!
-        alias create new
-      end
-    end
-
     # :call-seq:
     #   to_s(path)
     #   to_s(local_directory, name)
@@ -984,13 +976,29 @@ module LocalFileSystemEntry
       end
     end
 
+    # Part of implementation of ::create().
+    def included(base) # :nodoc:
+      # Hack: this method is called before any definition in +base+ occurs,
+      # so new() method is still one from Class.
+      class << base
+        alias create new
+      end
+    end
+
     protected
 
-    # The same as ::new().
-    #
     # <b>Inheritable.</b>
     #
-    def create(*args); new(*args); end
+    # It creates an instance of the Class it is called on and calls
+    # #initialize() of the instance passing +args+ and +block+ to it.
+    #
+    # You may use it as an alias for Class::new() in subclasses in case new() is
+    # not available or overriden.
+    # 
+    def create(*args, &block)
+      # See "Part of implementation of ::create()" for the rest of the
+      # implementation.
+    end
 
   end
 
@@ -1030,12 +1038,10 @@ module LocalFileSystemEntry
     @path = value
   end
 
-  private
-
   #
-  # +path+ is initial value for #path.
+  # sets #path to +path+.
   #
-  def initialize(path)
+  def initialize(path)  # :notnew:
     @path = path
   end
 

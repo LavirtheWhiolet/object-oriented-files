@@ -544,10 +544,12 @@ module FileSystemEntry
   end
 
   #
-  # actually deletes this FileSystemEntry. It returns nothing.
+  # deletes resources associated with this FileSystemEntry (e. g., file on a
+  # disk, data set on a magnetic tape, entry in LDAP directory etc.).
+  # It returns nothing.
   #
   # <b>Abstract.</b>
-  #
+  # 
   def delete0()
   end
 

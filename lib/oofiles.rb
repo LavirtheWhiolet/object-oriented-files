@@ -309,6 +309,58 @@ module FileSystemEntry
       end
     end
 
+    #
+    # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ and
+    # returns that copy.
+    # 
+    # +overwrite+ shows whether it is allowed to overwrite any existing
+    # FileSystemEntry if needed.
+    #
+    def copy(entry, directory, new_name, overwrite)
+      case [entry, directory]
+      when [LocalFile, LocalDirectory]
+        
+      else
+        raise NotImplementedError.new %Q{can not copy #{entry} to #{directory}: copying of #{entry.class} to #{directory.class} is not implemented}
+      end
+    end
+    
+    #
+    # moves +entry+ (FileSystemEntry) to +directory+ as +new_name+.
+    # The difference between moving and copying is that moving preserves
+    # #modification_time.
+    #
+    # +overwrite+ shows whether it is allowed to overwrite any existing
+    # FileSystemEntry if needed.
+    #
+    # It returns +entry+.
+    #
+    def move(entry, directory, new_name, overwrite)
+      case [entry, directory]
+      when [LocalFile, LocalDirectory]
+        
+      else
+        # Move by copying and setting modification time.
+        begin
+          old_modification_time =
+            begin
+              entry.modification_time
+            rescue NotImplementedError
+              raise NotImplementedError.new %Q{can not move #{entry} to #{directory}: #{entry.class}.modification_time (or one of its dependent methods) is not implemented}
+            end
+          copy = FileSystemEntry.copy(directory, new_name, overwrite)
+          begin
+            copy.modification_time = old_modification_time
+          rescue NotImplementedError
+            raise NotImplementedError.new %Q{can not complete moving of #{entry} to #{directory}: #{copy.class}.modification_time (or one of its dependent methods) setter is not implemented}
+          end
+          entry.delete0()  # Oh. :-|
+          entry.become!(copy)
+        end
+      end
+      return entry
+    end
+    
   end
 
   #
@@ -472,7 +524,7 @@ module FileSystemEntry
   def copy_as_ebcdic_to(directory, new_name = self.name)
     copy_as_ebcdic0(directory, new_name, overwrite?)
   end
-
+  
   class AlreadyExists < Exception
 
     def initialize(entry_as_string)
@@ -490,26 +542,6 @@ module FileSystemEntry
   end
 
   protected
-
-  #
-  # copies this FileSystemEntry to +directory+ as +new_name+ and returns
-  # that copy.
-  #
-  # +overwrite+ shows whether it is allowed to overwrite any existing
-  # FileSystemEntry if needed.
-  #
-  # See also #copy_not_implemented().
-  #
-  # <b>Abstract.</b>
-  #
-  def copy0(directory, new_name, overwrite)
-  end
-
-  # raises NotImplementedError telling that  copying of this type of
-  # FileSystemEntry to type of +directory+ is not implemented.
-  def copy_not_implemented(directory)
-    raise NotImplementedError.new %Q{Can not copy #{self} to #{directory}: copying of #{self.class} to #{directory.class} is not implemented}
-  end
 
   #
   # moves this FileSystemEntry to +directory+ as +new_name+. The difference

@@ -361,6 +361,26 @@ module FileSystemEntry
       return entry
     end
     
+    #
+    # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ in
+    # EBCDIC mode.
+    #
+    # Some systems perform basic copying (#copy_to()) and copying in
+    # EBCDIC mode entirely differently (for example, FTP server of
+    # IBM mainframes). This method deals with it.
+    #
+    # +overwrite+ shows whether it is allowed to overwrite any existing
+    # FileSystemEntry if needed.
+    #
+    def copy_as_ebcdic(entry, directory, new_name, overwrite)
+      case [entry, directory]
+      when [LocalFile, LocalDirectory]
+        
+      else
+        raise NotImplementedError.new %(can not copy #{entry} to #{directory} in EBCDIC mode: copying of #{entry.class} to #{directory.class} in EBCDIC mode is not implemented)
+      end
+    end
+
   end
 
   #
@@ -581,27 +601,6 @@ module FileSystemEntry
   # <b>Abstract.</b>
   #
   def delete0()
-  end
-
-  #
-  # <b>Abstract.</b>
-  #
-  # Implementation of #copy_as_ebcdic_to().
-  #
-  # +overwrite+ shows whether it is allowed to overwrite any existing
-  # FileSystemEntry if needed.
-  #
-  # See also #copy_as_ebcdic_not_implemented().
-  #
-  def copy_as_ebcdic0(directory, new_name, overwrite)
-  end
-
-  #
-  # raises NotImplementedError telling that copying of this kind of
-  # FileSystemEntry to kind of +directory+ in EBCDIC mode is not implemented.
-  #
-  def copy_as_ebcdic_not_implemened(directory)
-    raise NotImplementedError.new %Q{Can not copy #{self} to #{directory} in EBCDIC mode: copying of #{self.class} to #{directory.class} in EBCDIC mode is not implemented}
   end
 
   private

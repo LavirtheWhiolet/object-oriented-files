@@ -310,13 +310,15 @@ module FileSystemEntry
     end
 
     #
-    # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ and
+    # copies +entry+ (FileSystemEntry) to +dest_directory+ as +new_name+ and
     # returns that copy.
     # 
     # +overwrite+ shows whether it is allowed to overwrite any existing
     # FileSystemEntry if needed.
     #
-    def copy(entry, directory, new_name, overwrite)
+    def copy(entry, dest_directory, new_name, overwrite)
+      directory = dest_directory
+      #
       case [entry, directory]
       when [LocalFile, LocalDirectory]
         
@@ -326,7 +328,7 @@ module FileSystemEntry
     end
     
     #
-    # moves +entry+ (FileSystemEntry) to +directory+ as +new_name+.
+    # moves +entry+ (FileSystemEntry) to +dest_directory+ as +new_name+.
     # The difference between moving and copying is that moving preserves
     # #modification_time.
     #
@@ -335,7 +337,9 @@ module FileSystemEntry
     #
     # It returns +entry+.
     #
-    def move(entry, directory, new_name, overwrite)
+    def move(entry, dest_directory, new_name, overwrite)
+      directory = dest_directory
+      #
       case [entry, directory]
       when [LocalFile, LocalDirectory]
         

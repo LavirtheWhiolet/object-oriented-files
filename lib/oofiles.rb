@@ -534,12 +534,7 @@ module FileSystemEntry
   end
 
   #
-  # copies this FileSystemEntry to +directory+ as +new_name+ in
-  # EBCDIC mode.
-  #
-  # Some systems perform basic copying (#copy_to()) and copying in EBCDIC mode
-  # entirely differently (for example, IBM mainframes). This method deals with
-  # it.
+  # See ::copy_as_ebcdic().
   #
   def copy_as_ebcdic_to(directory, new_name = self.name)
     copy_as_ebcdic0(directory, new_name, overwrite?)

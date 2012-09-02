@@ -264,6 +264,12 @@ end
 
 require 'facets/file/ext'
 
+# = EBCDIC Mode
+# 
+# Some systems perform basic copying (#copy_to()) and copying in
+# EBCDIC mode entirely differently (for example, FTP server of
+# IBM mainframes). This method deals with it.
+#
 module FileSystemEntry
 
   include Replaceable
@@ -363,15 +369,15 @@ module FileSystemEntry
     
     #
     # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ in
-    # EBCDIC mode and returns the copy.
-    #
-    # Some systems perform basic copying (#copy_to()) and copying in
-    # EBCDIC mode entirely differently (for example, FTP server of
-    # IBM mainframes). This method deals with it.
+    # {test}[rdoc-ref:FileSystemEntry@EBCDIC+Mode] and returns the copy.
     #
     # +overwrite+ shows whether it is allowed to overwrite any existing
     # FileSystemEntry if needed.
-    #
+    # 
+    # === EBCDIC Mode
+    # 
+    # Test
+    # 
     def copy_as_ebcdic(entry, directory, new_name, overwrite)
       case [entry, directory]
       when [LocalFile, LocalDirectory]

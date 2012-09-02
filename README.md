@@ -1,7 +1,7 @@
-Object-oriented files
+Object oriented files
 =====================
 
-Library for Ruby for handling files in object-oriented style.
+Library for Ruby for handling files in object oriented style.
 
 How to use
 ----------

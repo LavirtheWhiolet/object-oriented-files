@@ -564,38 +564,6 @@ module FileSystemEntry
   protected
 
   #
-  # moves this FileSystemEntry to +directory+ as +new_name+. The difference
-  # between moving and copying is that moving preserves #modification_time.
-  #
-  # +overwrite+ shows whether it is allowed to overwrite any existing
-  # FileSystemEntry if needed.
-  #
-  # It returns this FileSystemEntry.
-  #
-  # <b>Overridable.</b> This implementation works via #copy0() and #delete0().
-  #
-  def move0(directory, new_name, overwrite)
-    #
-    old_modification_time =
-      begin
-        self.modification_time
-      rescue NotImplementedError
-        raise NotImplementedError.new %Q{Can not move #{self} to #{directory}: #{self.class}.modification_time is not implemented}
-      end
-    #
-    copy = copy0(directory, new_name, overwrite)
-    begin
-      copy.modification_time = old_modification_time
-    rescue NotImplementedError
-      raise NotImplementedError.new %Q{Can not complete moving of #{self} to #{directory}: #{copy.class}.modification_time setter is not implemented}
-    end
-    #
-    self.delete0()
-    #
-    self.become!(copy)
-  end
-
-  #
   # actually deletes this FileSystemEntry. It returns nothing.
   #
   # <b>Abstract.</b>

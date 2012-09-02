@@ -311,11 +311,11 @@ module FileSystemEntry
 
     #
     # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ and
-    # returns that copy.
+    # returns the copy.
     # 
     # +overwrite+ shows whether it is allowed to overwrite any existing
     # FileSystemEntry if needed.
-    #
+    # 
     def copy(entry, directory, new_name, overwrite)
       case [entry, directory]
       when [LocalFile, LocalDirectory]
@@ -363,7 +363,7 @@ module FileSystemEntry
     
     #
     # copies +entry+ (FileSystemEntry) to +directory+ as +new_name+ in
-    # EBCDIC mode.
+    # EBCDIC mode and returns the copy.
     #
     # Some systems perform basic copying (#copy_to()) and copying in
     # EBCDIC mode entirely differently (for example, FTP server of
